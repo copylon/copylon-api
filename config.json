@@ -1,0 +1,15 @@
+{
+  "settings": {
+    "adapter": "postgres",
+    "adapterOptions": {
+      "server": "postgres",
+      "port": 5432,
+      "database": "postgres",
+      "auth": {
+        "username": "postgres",
+        "password": "example"
+      },
+      "useTLS": false
+    }
+  }
+}
