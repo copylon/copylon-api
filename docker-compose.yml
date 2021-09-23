@@ -1,0 +1,48 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    networks:
+      - openhms-api-network
+    environment:
+      POSTGRES_PASSWORD: example
+    profiles:
+      - "development"
+      - "database"
+
+  adminer:
+    image: adminer
+    depends_on:
+      - postgres
+    restart: always
+    networks:
+      - openhms-api-network
+    ports:
+      - "8080:8080"
+    profiles:
+      - "debug"
+      - "database"
+
+  openhms-api:
+    depends_on:
+      - postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:8080"
+    networks:
+      - openhms-api-network
+    profiles:
+      - "development"
+      - "api"
+    volumes:
+      - ./config.json:/config.json
+
+
+
+networks:
+  openhms-api-network:
+
