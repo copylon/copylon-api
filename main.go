@@ -1,40 +1,24 @@
 package main
 
 import (
-	"database/sql"
-	"github.com/gin-gonic/gin"
 	"log"
+	"openhms/internal"
 	"os"
 )
 
 func main() {
-	var jsonFile *os.File
-	var err error
-	if jsonFile, err = os.Open("config.json"); err == nil {
-		config := ParseConfig(jsonFile)
-		if db, connectionError := OpenDatabase(&config.Settings); connectionError == nil && db != nil {
-			sqlDB, _ := db.DB()
-
-			defer func(sqlDB *sql.DB) {
-				log.Println("Closing database connection after closing application")
-				sqlError := sqlDB.Close()
-				if sqlError != nil {
-					panic("Couldn't close database connection. Exiting")
-				}
-			}(sqlDB)
-		} else if connectionError != nil {
-			log.Fatalf("Error occurred %s", connectionError)
-		}
-		server := gin.Default()
-		server.GET("/", func(c *gin.Context) {
-			c.JSON(200, gin.H{"message": "hello"})
-			return
-		})
-		serveError := server.Run(":8080")
-		if serveError != nil {
-			return 
-		}
-	} else {
-		log.Fatalf("Error opening file %s", err)
+	jsonFile, jsonError := os.Open("config.json")
+	if jsonError != nil {
+		log.Fatalf("Error opening file %v", jsonError)
 	}
+	config, err := internal.ParseConfig(jsonFile)
+	if err != nil {
+		log.Fatalf("Error parsing json file %v", err)
+	}
+	db, connectionError := internal.OpenDatabase(&config.Settings)
+	if connectionError != nil {
+		log.Fatalf("Error occurred while connecting to database %s", connectionError)
+	}
+	sqlDB, _ := db.DB()
+	defer sqlDB.Close()
 }
