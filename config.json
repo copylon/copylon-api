@@ -2,7 +2,7 @@
   "settings": {
     "adapter": "postgres",
     "adapterOptions": {
-      "server": "postgres",
+      "server": "localhost",
       "port": 5432,
       "database": "postgres",
       "auth": {
@@ -11,5 +11,11 @@
       },
       "useTLS": false
     }
+  },
+  "oauth": {
+    "server_uri": "http://localhost:8080/auth/realms/master/protocol/openid-connect/",
+    "client_id": "openhms-api",
+    "client_secret": "8OjQktoh6p0VlhsWV022CFAUfq0GB2XE",
+    "callback_uri": "http://localhost:5001/auth/callback"
   }
 }
