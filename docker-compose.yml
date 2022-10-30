@@ -8,6 +8,8 @@ services:
       - openhms-api-network
     environment:
       POSTGRES_PASSWORD: example
+    ports:
+      - "5432:5432"
     profiles:
       - "development"
       - "database"
@@ -22,8 +24,7 @@ services:
     ports:
       - "8080:8080"
     profiles:
-      - "debug"
-      - "database"
+      - "admin"
 
   openhms-api:
     depends_on:

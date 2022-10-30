@@ -7,6 +7,6 @@ RUN go build
 
 FROM alpine:latest as production
 RUN apk update && apk upgrade && apk add --no-cache libc6-compat
-COPY --from=build /api/openhms-api /app/bin/openhms-api
+COPY --from=build /api/openhms /app/bin/openhms
 
-CMD ["/app/bin/openhms-api"]
+CMD ["/app/bin/openhms"]

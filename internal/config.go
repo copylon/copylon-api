@@ -2,6 +2,7 @@ package internal
 
 type Configuration struct {
 	Settings ConfigurationSettings `json:"settings"`
+	OAuth    OAuthOptions          `json:"oauth"`
 }
 
 type ConfigurationSettings struct {
@@ -20,4 +21,11 @@ type AdapterOptions struct {
 type AdapterAuthOptions struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
+}
+
+type OAuthOptions struct {
+	ServerURI    string `json:"server_uri"`
+	ClientID     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
+	CallbackURI  string `json:"callback_uri"`
 }
