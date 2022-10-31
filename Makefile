@@ -8,16 +8,12 @@ HELP_CMD = grep -E '^[a-zA-Z_-]+:.*?\#\# .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS
 .PHONY: openhms
 project := openhms
 
-all: proto $(project) ## Generate Pbs and build
+all: $(project) ## Generate Pbs and build
 openhms: $@ ## Build the api binary
 
 $(project):
 	go build
 
-
-.PHONY: proto
-proto: ## Generate Pbs from proto files
-	protoc -I${PROTO_DIR} --go_opt=module=${PACKAGE} --go_out=. --go-grpc_out=. ${PROTO_DIR}/*.proto
 
 test: all ## Launch tests
 	go test ./...
