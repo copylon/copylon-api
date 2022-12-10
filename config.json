@@ -10,7 +10,8 @@
         "password": "example"
       },
       "useTLS": false
-    }
+    },
+    "port": 3000
   },
   "oauth": {
     "server_uri": "http://localhost:8080/auth/realms/master/protocol/openid-connect/",
