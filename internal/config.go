@@ -6,6 +6,7 @@ type Configuration struct {
 }
 
 type ConfigurationSettings struct {
+	Port           uint           `json:"port"`
 	Adapter        string         `json:"adapter"`
 	AdapterOptions AdapterOptions `json:"adapterOptions"`
 }

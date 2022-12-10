@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"github.com/openhms/openhms-api/internal"
+	"github.com/openhms/openhms-api/pkg/router"
 	"log"
-	"openhms/internal"
 	"os"
 )
 
@@ -21,4 +23,11 @@ func main() {
 	}
 	sqlDB, _ := db.DB()
 	defer sqlDB.Close()
+	port := config.Settings.Port
+	r, v1 := router.InitRouter()
+	router.Routes(v1)
+	serverErr := r.Run(fmt.Sprintf(":%d", port))
+	if serverErr != nil {
+		return
+	}
 }

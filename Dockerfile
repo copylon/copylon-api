@@ -1,12 +1,12 @@
-FROM golang:1.17 as build
+FROM golang:1.19-alpine as build
 
 WORKDIR /api
+COPY go.mod go.sum ./
+RUN go mod download
 COPY . .
-RUN go mod tidy && go mod verify
 RUN go build
 
 FROM alpine:latest as production
-RUN apk update && apk upgrade && apk add --no-cache libc6-compat
-COPY --from=build /api/openhms /app/bin/openhms
+COPY --from=build /api/openhms-api /app/bin/openhms
 
 CMD ["/app/bin/openhms"]
